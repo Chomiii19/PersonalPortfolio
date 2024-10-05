@@ -16,6 +16,42 @@ const dotContainer = document.querySelector(".slides");
 const contents = document.querySelector(".contents");
 const dots = document.querySelectorAll(".dot");
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let holdTimeout;
+let isHolding = false;
+let shrinkInterval;
+let scale = 1.0;
+const initialDimensions = Array.from(moveElements).map((element)=>({
+        width: parseFloat(getComputedStyle(element).width),
+        height: parseFloat(getComputedStyle(element).height)
+    }));
+const shrinkDimensions = Array.from(moveElements).map((element)=>({
+        width: parseFloat(getComputedStyle(element).width) * 0.8,
+        height: parseFloat(getComputedStyle(element).height) * 0.8
+    }));
+//////////////////////////////////////
+function reduceSize() {
+    scale = 0.9;
+    let origWidth, origHeight;
+    moveElements.forEach((div, index)=>{
+        div.style.width = `${shrinkDimensions[index].width}px`;
+        div.style.height = `${shrinkDimensions[index].height}px`;
+    });
+    shrinkInterval = setInterval(()=>{
+        console.log("SHrinking");
+        moveElements.forEach((div, index)=>{
+            const { posX, posY } = initialPositions[index];
+            const offsetX = (cursor.clientX - (posX + 50)) * 0.07;
+            const offsetY = (cursor.clientY - (posY + 50)) * 0.07;
+            div.style.transform = ` translate(${offsetX}px, ${offsetY}px)`;
+        });
+    }, 100);
+}
+function resetSize() {
+    moveElements.forEach((div, index)=>{
+        div.style.width = `${initialDimensions[index].width}px`;
+        div.style.height = `${initialDimensions[index].height}px`;
+    });
+}
 const initialPositions = Array.from(moveElements).map((element)=>({
         posX: element.offsetLeft,
         posY: element.offsetTop
@@ -29,7 +65,7 @@ noiseContainer.addEventListener("mousemove", (e)=>{
         const { posX, posY } = initialPositions[index];
         const offsetX = (x - (posX + 50)) * 0.07;
         const offsetY = (y - (posY + 50)) * 0.07;
-        element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        element.style.transform = ` translate(${offsetX}px, ${offsetY}px)`;
     });
 });
 const generateRandomLetter = (intro)=>{
@@ -107,12 +143,12 @@ setTimeout(()=>{
         introBar.style.width = `${currentWidth}px`;
     }, 10);
 }, 1500);
-let holdTimeout;
-let isHolding = false;
+///////////////////////////////////////
 document.addEventListener("mousedown", ()=>{
     clickHoldBtn.classList.remove("appear");
     box.classList.add("loading");
     holdBtn.classList.add("appear");
+    reduceSize();
     holdTimeout = setTimeout(()=>{
         isHolding = true;
         introSection.style.display = "none";
@@ -123,6 +159,7 @@ document.addEventListener("touchstart", ()=>{
     clickHoldBtn.classList.remove("appear");
     box.classList.add("loading");
     holdBtn.classList.add("appear");
+    reduceSize();
     holdTimeout = setTimeout(()=>{
         isHolding = true;
         introSection.style.display = "none";
@@ -131,6 +168,9 @@ document.addEventListener("touchstart", ()=>{
 });
 document.addEventListener("mouseup", ()=>{
     clearTimeout(holdTimeout);
+    clearInterval(shrinkInterval);
+    resetSize();
+    scale = 1;
     if (!isHolding) {
         clickHoldBtn.classList.add("appear");
         holdBtn.classList.remove("appear");
@@ -139,7 +179,9 @@ document.addEventListener("mouseup", ()=>{
     isHolding = false;
 });
 document.addEventListener("touchend", ()=>{
+    clearInterval(shrinkInterval);
     clearTimeout(holdTimeout);
+    resetSize();
     if (!isHolding) {
         clickHoldBtn.classList.add("appear");
         holdBtn.classList.remove("appear");
