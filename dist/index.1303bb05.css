@@ -673,14 +673,11 @@ main {
   transition: all .3s;
 }
 
-#wave {
-  pointer-events: auto;
-}
-
 .music-container {
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: .5rem;
+  width: auto;
   display: flex;
 }
 
@@ -691,6 +688,93 @@ main {
   border: 1px solid #fff;
   border-radius: .4rem;
   padding: .1rem .5rem;
+}
+
+.soundWave {
+  cursor: pointer;
+  pointer-events: auto;
+  gap: .15rem;
+  width: auto;
+  height: .8rem;
+  display: flex;
+  transform: rotate(180deg);
+}
+
+.bar {
+  background-color: #fff;
+  width: 5px;
+  height: 2px;
+  transition: all .3s;
+}
+
+.active0 {
+  animation: 2s linear infinite wave;
+}
+
+.active1 {
+  animation: 1s linear infinite wave;
+}
+
+.active2 {
+  animation: 2s linear infinite wave;
+}
+
+.active3 {
+  animation: 1.2s linear infinite wave;
+}
+
+.active4 {
+  animation: 1.4s linear infinite wave;
+}
+
+.active5 {
+  animation: 1.8s linear infinite wave;
+}
+
+.mute {
+  height: 2px;
+}
+
+@keyframes wave {
+  0% {
+    height: 40%;
+  }
+
+  20% {
+    height: 90%;
+  }
+
+  30% {
+    height: 60%;
+  }
+
+  40% {
+    height: 20%;
+  }
+
+  50% {
+    height: 40%;
+  }
+
+  60% {
+    height: 70%;
+  }
+
+  70% {
+    height: 40%;
+  }
+
+  80% {
+    height: 80%;
+  }
+
+  90% {
+    height: 10%;
+  }
+
+  100% {
+    height: 100%;
+  }
 }
 
 @media (width <= 480px) {

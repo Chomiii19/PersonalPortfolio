@@ -684,17 +684,12 @@ main {
   transition: 0.3s ease;
 }
 
-#wave {
-  /* width: 3rem;
-  height: 1rem; */
-  pointer-events: auto;
-}
-
 .music-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 0.5rem;
+  width: auto;
 }
 
 .play-button {
@@ -704,6 +699,79 @@ main {
   border: 1px solid #fff;
   padding: 0.1rem 0.5rem;
   border-radius: 0.4rem;
+}
+
+.soundWave {
+  display: flex;
+  gap: 0.15rem;
+  width: auto;
+  height: 0.8rem;
+  cursor: pointer;
+  pointer-events: auto;
+  transform: rotate(180deg);
+}
+
+.bar {
+  height: 2px;
+  width: 5px;
+  background-color: #fff;
+  transition: 0.3s ease;
+}
+
+.active0 {
+  animation: wave 2s linear infinite;
+}
+.active1 {
+  animation: wave 1s linear infinite;
+}
+.active2 {
+  animation: wave 2s linear infinite;
+}
+.active3 {
+  animation: wave 1.2s linear infinite;
+}
+.active4 {
+  animation: wave 1.4s linear infinite;
+}
+.active5 {
+  animation: wave 1.8s linear infinite;
+}
+
+.mute {
+  height: 2px;
+}
+
+@keyframes wave {
+  0% {
+    height: 40%;
+  }
+  20% {
+    height: 90%;
+  }
+  30% {
+    height: 60%;
+  }
+  40% {
+    height: 20%;
+  }
+  50% {
+    height: 40%;
+  }
+  60% {
+    height: 70%;
+  }
+  70% {
+    height: 40%;
+  }
+  80% {
+    height: 80%;
+  }
+  90% {
+    height: 10%;
+  }
+  100% {
+    height: 100%;
+  }
 }
 
 @media (max-width: 480px) {

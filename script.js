@@ -32,35 +32,29 @@ const shrinkDimensions = Array.from(moveElements).map((element) => ({
   height: parseFloat(getComputedStyle(element).height) * 0.8,
 }));
 
-//////////////////////////////////////
-function reduceSize() {
-  scale = 0.9;
-  let origWidth, origHeight;
-
+const reduceSize = () => {
   moveElements.forEach((div, index) => {
     div.style.width = `${shrinkDimensions[index].width}px`;
     div.style.height = `${shrinkDimensions[index].height}px`;
   });
 
   shrinkInterval = setInterval(() => {
-    console.log("SHrinking");
-
     moveElements.forEach((div, index) => {
       const { posX, posY } = initialPositions[index];
       const offsetX = (cursor.clientX - (posX + 50)) * 0.07;
       const offsetY = (cursor.clientY - (posY + 50)) * 0.07;
 
-      div.style.transform = ` translate(${offsetX}px, ${offsetY}px)`;
+      div.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     });
   }, 100);
-}
+};
 
-function resetSize() {
+const resetSize = () => {
   moveElements.forEach((div, index) => {
     div.style.width = `${initialDimensions[index].width}px`;
     div.style.height = `${initialDimensions[index].height}px`;
   });
-}
+};
 
 const initialPositions = Array.from(moveElements).map((element) => ({
   posX: element.offsetLeft,
@@ -174,7 +168,6 @@ setTimeout(() => {
   }, 10);
 }, 1500);
 
-///////////////////////////////////////
 document.addEventListener("mousedown", () => {
   clickHoldBtn.classList.remove("appear");
   box.classList.add("loading");
@@ -310,20 +303,49 @@ form.addEventListener("click", (e) => {
 });
 
 const audio = document.querySelector("audio");
-const playButton = document.querySelector(".play-button");
+const playButton = document.querySelector(".soundWave");
+const bars = document.querySelectorAll(".bar");
 
-let isMuted = false;
+// let isMuted = true;
+// playButton.addEventListener("click", () => {
+//   audio.play().catch((error) => {
+//     console.error("Audio play failed:", error);
+//   });
+
+//   if (!isMuted) {
+//     audio.muted = true;
+//     bars.forEach((bar, i) => {
+//       bar.classList.remove("mute");
+//       bar.classList.remove(`active${i}`);
+//     });
+//     isMuted = true;
+//   } else {
+//     bars.forEach((bar, i) => {
+//       bar.classList.add(`active${i}`);
+//     });
+//     audio.muted = false;
+//     isMuted = false;
+//   }
+// });
+
+let isMuted = true;
 playButton.addEventListener("click", () => {
-  if (!isMuted) {
-    audio.muted = false;
-    isMuted = true;
-    playButton.textContent = "Mute Music";
-    audio.play().catch((error) => {
-      console.error("Audio play failed:", error);
-    });
-  } else {
+  audio.play().catch((error) => {
+    console.error("Audio play failed:", error);
+  });
+
+  if (!audio.muted) {
     audio.muted = true;
+    bars.forEach((bar, i) => {
+      bar.classList.remove("mute");
+      bar.classList.remove(`active${i}`);
+    });
+    isMuted = true;
+  } else {
+    bars.forEach((bar, i) => {
+      bar.classList.add(`active${i}`);
+    });
+    audio.muted = false;
     isMuted = false;
-    playButton.textContent = "Unmute Music";
   }
 });
