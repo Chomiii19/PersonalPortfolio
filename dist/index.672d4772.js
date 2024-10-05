@@ -259,34 +259,16 @@ form.addEventListener("click", (e)=>{
     form.reset();
 });
 const audio = document.querySelector("audio");
-const playButton = document.querySelector(".soundWave");
+const soundWaveContainer = document.querySelector(".soundWave");
+const playButton = document.querySelector(".play-button");
 const bars = document.querySelectorAll(".bar");
-// let isMuted = true;
-// playButton.addEventListener("click", () => {
-//   audio.play().catch((error) => {
-//     console.error("Audio play failed:", error);
-//   });
-//   if (!isMuted) {
-//     audio.muted = true;
-//     bars.forEach((bar, i) => {
-//       bar.classList.remove("mute");
-//       bar.classList.remove(`active${i}`);
-//     });
-//     isMuted = true;
-//   } else {
-//     bars.forEach((bar, i) => {
-//       bar.classList.add(`active${i}`);
-//     });
-//     audio.muted = false;
-//     isMuted = false;
-//   }
-// });
 let isMuted = true;
-playButton.addEventListener("click", ()=>{
+soundWaveContainer.addEventListener("click", ()=>{
     audio.play().catch((error)=>{
         console.error("Audio play failed:", error);
     });
-    if (!audio.muted) {
+    playButton.style.display = "none";
+    if (!isMuted) {
         audio.muted = true;
         bars.forEach((bar, i)=>{
             bar.classList.remove("mute");
@@ -296,10 +278,30 @@ playButton.addEventListener("click", ()=>{
     } else {
         bars.forEach((bar, i)=>{
             bar.classList.add(`active${i}`);
+            bar.style.display = "inline";
         });
         audio.muted = false;
         isMuted = false;
     }
-});
+}); // let isMuted = true;
+ // soundWaveContainer.addEventListener("click", () => {
+ //   audio.play().catch((error) => {
+ //     console.error("Audio play failed:", error);
+ //   });
+ //   if (!audio.muted) {
+ //     audio.muted = true;
+ //     bars.forEach((bar, i) => {
+ //       bar.classList.remove("mute");
+ //       bar.classList.remove(`active${i}`);
+ //     });
+ //     isMuted = true;
+ //   } else {
+ //     bars.forEach((bar, i) => {
+ //       bar.classList.add(`active${i}`);
+ //     });
+ //     audio.muted = false;
+ //     isMuted = false;
+ //   }
+ // });
 
 //# sourceMappingURL=index.672d4772.js.map

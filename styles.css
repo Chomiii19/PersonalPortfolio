@@ -686,10 +686,19 @@ main {
 
 .music-container {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: flex-end;
+  align-items: flex-end;
   gap: 0.5rem;
   width: auto;
+}
+
+.music-container p {
+  height: 1rem;
+  font-size: 1rem;
+}
+
+.logo {
+  font-size: 1rem;
 }
 
 .play-button {
@@ -697,15 +706,16 @@ main {
   cursor: pointer;
   background-color: transparent;
   border: 1px solid #fff;
-  padding: 0.1rem 0.5rem;
+  padding: 0 0.2rem;
   border-radius: 0.4rem;
+  transform: rotate(180deg);
 }
 
 .soundWave {
   display: flex;
   gap: 0.15rem;
   width: auto;
-  height: 0.8rem;
+  height: 1rem;
   cursor: pointer;
   pointer-events: auto;
   transform: rotate(180deg);
@@ -716,6 +726,7 @@ main {
   width: 5px;
   background-color: #fff;
   transition: 0.3s ease;
+  display: none;
 }
 
 .active0 {
